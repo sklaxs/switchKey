@@ -1,0 +1,237 @@
+#i3 config file edit by Sklaxs, read https//github.com/sklax/swichKey for more informations
+#this configuration file is commented in french because bépo users mainly speak french.
+#If you want a translation ask me by tweeter @sklaxs
+#currentconfig: bepo
+
+#Note si volonté de personalisation de cette configuration
+#Il est possible de définir des raccourcis d'applications de 2 façons:
+#bindsym renvoie au symbole de la touche (ça peut être aléatoire selon la disposition du clavier);
+#bindcode renvoie au code de la touche obtenu via l'utilitaire de test d'évenements xev",
+# c'est donc une méthode préférable pour les touches particulières:
+
+
+##configuration des touches Mod
+#Définition de Alt en tant que modificateur secondaire (pour mes raccourcis):
+set $alt Mod1
+# Définition de space en tant que modificateur
+set $mod Mod3
+
+##définition des variables de touche (sur base AZERTY)
+#ligne 1
+set $key_3escape "Escape"
+set $key_twosuperior "dollar"
+set $key_3ampersand "quotedbl"
+set $key_3eacute "guillemotright"
+set $key_quotedbl "guillemotleft"
+set $key_1apostrophe "parenleft"
+set $key_parenleft "parenright"
+set $key_minus "at"
+set $key_1egrave "plus"
+set $key_1underscore "minus"
+set $key_ccedilla "slash"
+set $key_2agrave "asterisk"
+set $key_parenright "equal"
+set $key_2equal "percent"
+set $key_BackSpace "BackSpace"
+
+
+#Ligne 2
+set $key_Tab "Tab"
+set $key_3a "b"
+set $key_z "eacute"
+set $key_3e "p"
+set $key_r "o"
+set $key_t "egrave"
+set $key_y "dead_circumflex"
+set $key_2u "v"
+set $key_i "d
+set $key_o "l"
+set $key_p "j"
+set $key_dead_circumflex "z"
+set $key_dollar "w"
+set $key_Return "Return"
+
+#Ligne 3
+set $key_q "a"
+set $key_s "u"
+set $key_d "i"
+set $key_f "e"
+set $key_g "comma"
+set $key_h "c"
+set $key_j "t"
+set $key_k "s"
+set $key_l "r
+set $key_m "n"
+set $key_3ugrave "m"
+set $key_3asterisk "ccedilla"
+set $key_Shift_L "Shift_L"
+
+#Ligne 4
+set $key_less ecircumflex
+set $key_w agrave
+set $key_x y
+set $key_c x
+set $key_v period
+set $key_b k
+set $key_n apostrophe
+set $key_comma q
+set $key_semicolon g
+set $key_colon h
+set $key_4exclam f
+set $key_Shift_R Shift_R
+
+##configuration du "design"
+# police des titres de fenêtres. ISO 10646 = Unicode
+font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+
+# i3bar permet  l'affichage des espaces de travail (si i3status est disponible, des infos systèmes sont affichées)
+bar {
+    #démarrer i3status dans i3bar
+    status_command i3status
+
+    #position de la barre (top | bottom)
+    position bottom
+
+    #le system-tray reste sur l'écran principal
+    tray_output primary
+
+    #définition des couleurs des noms d'espaces de travail dans i3bar:
+    colors {
+      #<bordure> <arrière plan> <texte>
+		  focused_workspace #FF00FF   #111111         #00FF00
+
+      #définition de la couleur de police de i3status:
+		  statusline	  #EEEEEE
+		}
+}
+
+# Modification des couleurs de la fenêtre ayant le focus:
+# class	       	   bordure	fond	texte	indicateur
+client.focused	   #00FFFF	#111111	#00FF00	#FF00FF
+
+##configuration du comportement d'i3
+#Utilisation de la souris+$mod pour déplacer les fenêtres flottantes:
+floating_modifier $mod
+
+#Le focus ne suit pas la souris (évite le coup de paume sur le touchpad)
+focus_follows_mouse no
+
+#Lors du passage à un workspace, retaper le raccourci de ce workspace ramène à celui dont je viens
+workspace_auto_back_and_forth yes
+
+#Comportement des nouveaux containers (tabbed | stack | default ie tiled)
+workspace_layout default
+
+##Autorun
+assign [class="firefox"] $ws1
+assign [class="terminator"] $ws2
+assign [class="atom"] $ws3
+
+# Applications à démarrer avec i3 (ce sont des exemples persos, vous mettez bien ce que vous voulez ;):
+exec firefox
+exec terminator
+exec atom
+
+#Identification des espaces de travail
+set $ws1 "1-terminal"
+set $ws2 "2-firefox"
+set $ws3 "3-atom"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws0 "0"
+
+## se déplacer entre espaces de travail:
+bindsym $mod+ampersand workspace $ws1
+bindsym $mod+eacute workspace $ws2
+bindsym $mod+quotedbl workspace $ws3
+bindsym $mod+apostrophe workspace $ws4
+bindsym $mod+parenleft workspace $ws5
+bindsym $mod+minus workspace $ws6
+bindsym $mod+egrave workspace $ws7
+bindsym $mod+underscore workspace $ws8
+bindsym $mod+ccedilla workspace $ws9
+bindsym $mod+agrave workspace $ws0
+
+# déplacer la fenêtre active vers un espace de travail:
+bindsym $alt+ampersand move container to workspace $ws1
+bindsym $alt+eacute move container to workspace $ws2
+bindsym $alt+quotedbl move container to workspace $ws3
+bindsym $alt+apostrophe move container to workspace $ws4
+bindsym $alt+parenleft move container to workspace $ws5
+bindsym $alt+minus move container to workspace $ws6
+bindsym $alt+egrave move container to workspace $ws7
+bindsym $alt+underscore move container to workspace $ws8
+bindsym $alt+ccedilla move container to workspace $ws9
+bindsym $alt+agrave move container to workspace $ws0
+
+##configuration des raccourcis (main droite)
+# déplacer le focus entre les fenêtres avec jklm:
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+m focus right
+
+# déplacer la fenêtre active avec jklm:
+bindsym $alt+j move left
+bindsym $alt+k move down
+bindsym $alt+l move up
+bindsym $alt+m move right
+
+# redimensionner la fenêtre (la souris peut aussi être utilisée):
+bindsym $mod+u mode "resize"
+mode "resize" {
+        # Ces raccourcis fonctionnent dès l'entrée en mode "resize"
+        # j pour réduire la largeur de 10
+        # m pour agrandir la largeur de 10
+        # k pour agrandir la hauteur de 10
+        # l pour réduire la hauteur de 10
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym m resize grow width 10 px or 10 ppt
+
+        # Entrée ou Echap pour revenir en mode normal
+        bindsym Return mode "default"
+        bindsym escape mode "default"
+}
+
+# ouvrir un terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+# démarrer le lanceur de menu 'dmenu' (paquet suckless-tools)
+bindsym $mod+BackSpace exec dmenu_run
+
+#switcher de configuration clavier
+bindsym $mod+p exec ${HOME}/shell/switchKey/switchKey.sh
+
+##configuration des raccourcis (main gauche)
+# Raccourcis des mouvements entre espaces grâce aux touches fléchées
+bindsym $mod+Tab workspace next
+bindsym $mod+shift+Tab workspace prev
+
+# mise en plein écran de la fenêtre active:
+bindsym $mod+q fullscreen
+
+# diviser horizontalement (ex: mod+h suivi de mod+Entrée crée un nouveau terminal à côté du premier)
+bindsym $mod+s split h
+
+# diviser verticalement (ex: mod+v suivi de mod+Entrée crée un nouveau terminal sous le premier)
+bindsym $mod+d split v
+
+# fermer (tuer) la fenêtre ayant le focus:
+bindsym $mod+f kill
+
+# alterner l'affichage de la fenêtre active entre flottant et tiling:
+#bindsym $mod+a floating toggle
+
+# changer le mode d'affichage des containers:
+# stacked: fenêtres maximisées, barres de titre des fenetres ouvertes empilées,
+# tabbed: fenêtres maximisées, barres de titre des fenetres ouvertes les unes à côtés des autres, comme des onglets,
+# default: tiling (pavage).
+bindsym $mod+e layout tabbed
+bindsym $mod+z layout default
+bindsym $mod+r layout stacking

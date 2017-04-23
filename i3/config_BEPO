@@ -1,0 +1,173 @@
+#i3 config file edit by Sklaxs, read https//github.com/sklax/swichKey for more informations
+#this configuration file is commented in french because bépo users mainly speak french.
+#If you want a translation ask me by tweeter @sklaxs
+#currentconfig: bepo
+
+#Note si volonté de personalisation de cette configuration
+#Il est possible de définir des raccourcis d'applications de 2 façons:
+#bindsym renvoie au symbole de la touche (ça peut être aléatoire selon la disposition du clavier);
+#bindcode renvoie au code de la touche obtenu via l'utilitaire de test d'évenements xev",
+# c'est donc une méthode préférable pour les touches particulières:
+
+
+##configuration des touches Mod
+#Définition de Alt en tant que modificateur secondaire (pour mes raccourcis):
+set $alt Mod1
+# Définition de space en tant que modificateur
+set $mod Mod3
+
+##configuration du "design"
+# police des titres de fenêtres. ISO 10646 = Unicode
+font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+
+# i3bar permet  l'affichage des espaces de travail (si i3status est disponible, des infos systèmes sont affichées)
+bar {
+    #démarrer i3status dans i3bar
+    status_command i3status
+
+    #position de la barre (top | bottom)
+    position top
+
+    #le system-tray reste sur l'écran principal
+    tray_output primary
+
+    #définition des couleurs des noms d'espaces de travail dans i3bar:
+    colors {
+      #<bordure> <arrière plan> <texte>
+		  focused_workspace #FF00FF   #111111         #00FF00
+
+      #définition de la couleur de police de i3status:
+		  statusline	  #EEEEEE
+		}
+}
+
+# Modification des couleurs de la fenêtre ayant le focus:
+# class	       	   bordure	fond	texte	indicateur
+client.focused	   #00FFFF	#111111	#00FF00	#FF00FF
+
+##configuration du comportement d'i3
+#Utilisation de la souris+$mod pour déplacer les fenêtres flottantes:
+floating_modifier $mod
+
+#Le focus ne suit pas la souris (évite le coup de paume sur le touchpad)
+focus_follows_mouse no
+
+#Lors du passage à un workspace, retaper le raccourci de ce workspace ramène à celui dont je viens
+workspace_auto_back_and_forth yes
+
+#Comportement des nouveaux containers (tabbed | stack | default ie tiled)
+workspace_layout default
+
+#Identification des espaces de travail
+set $ws1 "1-terminal"
+set $ws2 "2-firefox"
+set $ws3 "3-atom"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws0 "0"
+
+##Autorun
+assign [class="firefox"] $ws1
+assign [class="terminator"] $ws2
+assign [class="atom"] $ws3
+
+# Applications à démarrer avec i3 (ce sont des exemples persos, vous mettez bien ce que vous voulez ;):
+exec firefox
+exec terminator
+exec atom
+
+## se déplacer entre espaces de travail:
+bindsym $mod+quotedbl workspace $ws1
+bindsym $mod+guillemotleft workspace $ws2
+bindsym $mod+guillemotright workspace $ws3
+bindsym $mod+parenleft workspace $ws4
+bindsym $mod+parenright workspace $ws5
+bindsym $mod+at workspace $ws6
+bindsym $mod+plus workspace $ws7
+bindsym $mod+minus workspace $ws8
+bindsym $mod+slash workspace $ws9
+bindsym $mod+asterisk workspace $ws0
+
+# déplacer la fenêtre active vers un espace de travail:
+bindsym $alt+quotedbl move container to workspace $ws1
+bindsym $alt+guillemotleft move container to workspace $ws2
+bindsym $alt+guillemotright move container to workspace $ws3
+bindsym $alt+parenleft move container to workspace $ws4
+bindsym $alt+parenright move container to workspace $ws5
+bindsym $alt+at move container to workspace $ws6
+bindsym $alt+plus move container to workspace $ws7
+bindsym $alt+minus move container to workspace $ws8
+bindsym $alt+slash move container to workspace $ws9
+bindsym $alt+asterisk move container to workspace $ws0
+
+##configuration des raccourcis (main droite)
+# déplacer le focus entre les fenêtres avec jklm:
+bindsym $mod+t focus left
+bindsym $mod+s focus down
+bindsym $mod+r focus up
+bindsym $mod+n focus right
+
+# déplacer la fenêtre active avec jklm:
+bindsym $alt+t move left
+bindsym $alt+s move down
+bindsym $alt+r move up
+bindsym $alt+n move right
+
+# redimensionner la fenêtre (la souris peut aussi être utilisée):
+bindsym $mod+v mode "resize"
+mode "resize" {
+        # Ces raccourcis fonctionnent dès l'entrée en mode "resize"
+        # j pour réduire la largeur de 10
+        # m pour agrandir la largeur de 10
+        # k pour agrandir la hauteur de 10
+        # l pour réduire la hauteur de 10
+        bindsym t resize shrink width 10 px or 10 ppt
+        bindsym s resize grow height 10 px or 10 ppt
+        bindsym r resize shrink height 10 px or 10 ppt
+        bindsym n resize grow width 10 px or 10 ppt
+
+        # Entrée ou Echap pour revenir en mode normal
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+# ouvrir un terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+# démarrer le lanceur de menu 'dmenu' (paquet suckless-tools)
+bindsym $mod+BackSpace exec dmenu_run
+
+#switcher de configuration clavier
+bindsym $mod+j exec ${HOME}/shell/switchKey/switchKey.sh
+
+##configuration des raccourcis (main gauche)
+# Raccourcis des mouvements entre espaces grâce aux touches fléchées
+bindsym $mod+Tab workspace next
+bindsym $mod+shift+Tab workspace prev
+
+# mise en plein écran de la fenêtre active:
+bindsym $mod+a fullscreen
+
+# diviser horizontalement (ex: mod+h suivi de mod+Entrée crée un nouveau terminal à côté du premier)
+bindsym $mod+u split h
+
+# diviser verticalement (ex: mod+v suivi de mod+Entrée crée un nouveau terminal sous le premier)
+bindsym $mod+i split v
+
+# fermer (tuer) la fenêtre ayant le focus:
+bindsym $mod+e kill
+
+# alterner l'affichage de la fenêtre active entre flottant et tiling:
+#bindsym $mod+b floating toggle
+
+# changer le mode d'affichage des containers:
+# stacked: fenêtres maximisées, barres de titre des fenetres ouvertes empilées,
+# tabbed: fenêtres maximisées, barres de titre des fenetres ouvertes les unes à côtés des autres, comme des onglets,
+# default: tiling (pavage).
+bindsym $mod+p layout tabbed
+bindsym $mod+eacute layout default
+bindsym $mod+o layout stacking

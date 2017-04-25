@@ -15,4 +15,5 @@ my sript can run without xcape (I use it for use space as mod), you need to comm
     ln -s ${HOME}/shell/switchKey/i3/config_BEPO ${HOME}/.i3/config_BEPO
 
 if you want to automatically switch in bepo at startup
+
     echo "${HOME}/shell/switchKey/switchKey.sh" >> ${HOME}/.profile

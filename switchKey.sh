@@ -31,6 +31,11 @@ SwitchAzerty()
   setxkbmap fr oss # we change keyboard mapping
   cp ${HOME}/.i3/config_AZERTY ${HOME}/.i3/config # we alternate i3 config file
   i3 reload # we reload i3
+  # we reset xmodmap for mod3 and mod4
+  xmodmap -e "clear mod3"
+  xmodmap -e "clear mod4"
+  xmodmap -e "add mod3 = Hyper_L"
+  xmodmap -e "add mod4 = Super_L Super_R"
   SetAlternateKey "space" "Hyper_L" "65" "False"
 }
 
@@ -40,13 +45,9 @@ SetAlternateKey()
   simulatedKey="$2"
   keycodeNumber="$3"
   bepoSwitch="$4"
+  echo "1"
 
-  # we reset xmodmap for mod3 and mod4
-  xmodmap -e "clear mod3"
-  xmodmap -e "clear mod4"
-  xmodmap -e "add mod3 = ${simulatedKey}"
-  xmodmap -e "add mod4 = Super_L Super_R"
-
+  echo "2"
   # we setup xmodmap for use space as moddifier
   xmodmap -e "keycode ${keycodeNumber} = $simulatedKey" # we define the simulated switch
   xmodmap -e "keycode any = ${regularKey}" # we define the regular key

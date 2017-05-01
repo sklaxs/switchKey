@@ -16,6 +16,9 @@ set $alt Mod1
 # Définition de space en tant que modificateur
 set $mod Mod3
 
+# Définition de la touche control
+set $control Control
+
 
 ## Configuration du "design"
 # Police des titres de fenêtres. ISO 10646 = Unicode
@@ -35,7 +38,7 @@ bar {
     # Définition des couleurs des noms d'espaces de travail dans i3bar:
     colors {
       # <bordure> <arrière plan> <texte>
-		  focused_workspace #FF00FF   #111111         #00FF00
+		  focused_workspace #FF00FF   #332f2f         #00FF00
 
       # Définition de la couleur de police de i3status:
 		  statusline	  #EEEEEE
@@ -44,7 +47,7 @@ bar {
 
 # Modification des couleurs de la fenêtre ayant le focus:
 # class	       	   bordure	fond	texte	indicateur
-client.focused	   #00FFFF	#111111	#00FF00	#FF00FF
+client.focused	   #ced0e2	#111111	#00FF00	#FF00FF
 
 
 ## Configuration du comportement d'i3
@@ -58,31 +61,87 @@ focus_follows_mouse no
 workspace_auto_back_and_forth yes
 
 # Comportement des nouveaux containers (tabbed | stack | default ie tiled)
-workspace_layout default
+workspace_layout tabbed
 
 # Identification des espaces de travail
 set $ws1 "1-terminal"
 set $ws2 "2-firefox"
-set $ws3 "3-atom"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
+set $ws3 "3-editor"
+set $ws4 "4-files"
+set $ws5 "5-monitoring"
+set $ws6 "6-player"
+set $ws7 "7-office"
 set $ws8 "8"
 set $ws9 "9"
 set $ws0 "10"
 
 
 ## Autorun
-assign [class="firefox"] $ws1
-assign [class="terminator"] $ws2
-assign [class="atom"] $ws3
+# Terminals
+assign [class="Lxterm|teminator|lxteminal"] $ws1
+assign [class="(?i)lxterminal"] $ws1
+assign [class="(?i)lxterm"] $ws1
+assign [class="(?i)terminator"] $ws1
 
-# Applications à démarrer avec i3 (ce sont des exemples persos, vous mettez bien ce que vous voulez ;):
+for_window [class="lxterminal|URxvt|XTerm|mate-terminal|terminator"] focus, layout tabbed
+
+# Browsers
+assign [class="Chromium|Firefox|Navigator|Iceweasel"] $ws2
+assign [class="(?i)firefox"] $ws2
+
+## Editeurs
+assign [class="(?i)pycharm"] $ws3
+assign [class="(?i)gedit"] $ws3
+assign [class="(?i)vstudio"] $ws3
+assign [class="(?i)atom"] $ws3
+
+for_window [class="pycharm|bpython2|gedit|medit"] focus, layout tabbed
+
+## Files Managers
+assign [class="Thunar|Caja"] $ws4
+assign [class="(?i)thunar"] $ws4
+
+#for_window [class="(?i)thunar"]  border none, focus, layout tabbed
+
+## Monitoring sytème
+for_window [title="Conky"] floating enable  border 1 pixel
+assign [class="(?i)Conky"] $ws5
+
+## Media Apps
+assign [class="(?i)mplayer"] $ws6
+assign [class="(?i)smplayer"] $ws6
+assign [class="(?i)clementine"] $ws6
+assign [class="(?i)ghb"] $ws6
+assign [class="(?i)pithos"] $ws6
+assign [class="(?i)vlc"] $ws6
+assign [class="(?i)cantata"] $ws6
+
+for_window [class="(?i)clementine"]  border none, focus, layout tabbed
+for_window [class="(?!)smplayer|(?!)clementine|(?!)cantata"]  border none, focus, floating enabled
+
+## Office Apps
+assign [class="(?i)thunderbird"] $ws7
+assign [class="(?i)reditr"] $ws7
+assign [class="libreoffice*|Zathura|libreoffice-writer|Abiword|Gnumeric"] $ws7
+assign [class="(?i)okular"] $ws7
+assign [class="(?i)libreoffice"] $ws7
+assign [class="(?i)hexchat"] $ws7
+
+## Applications à démarrer avec i3 (ce sont des exemples persos, vous mettez bien ce que vous voulez ;):
 exec firefox
 exec terminator
 exec atom
+exec conky
 
+## Raccourcis d'applications
+bindsym $mod+F1 exec terminator
+bindsym $mod+F2 exec firefox
+bindsym $mod+F3 exec atom
+bindsym $mod+Shift+F3 exec gedit
+bindsym $mod+F4 exec thunar
+bindsym $mod+F5 exec conky
+bindsym $mod+F6 exec vlc
+bindsym $mod+F7 exec libreoffice
 
 ## Se déplacer entre espaces de travail:
 bindsym $mod+ampersand workspace $ws1
@@ -131,7 +190,7 @@ mode "resize" {
 
         # Entrée ou Echap pour revenir en mode normal
         bindsym Return mode "default"
-        bindsym escape mode "default"
+        bindsym Escape mode "default"
 }
 
 # Ouvrir un terminal
@@ -144,8 +203,16 @@ bindsym $mod+BackSpace exec dmenu_run
 bindsym $mod+p exec ${HOME}/shell/switchKey/switchKey.sh
 
 
+
 ## Configuration des raccourcis (main gauche)
-# Raccourcis des mouvements entre espaces grâce aux touches fléchées
+# redemarer X11
+bindsym $mod+Shift+twosuperior restart
+# exit i3 - desactivé car il fraudais supprimer le fichier /tmp/switchKey.txt en même temps
+#bindsym $alt+twosuperior exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+# vérouiller le pc
+bindsym $mod+twosuperior exec "i3lock"
+
+# Passer d'un workspace à un autre
 bindsym $mod+Tab workspace next
 bindsym $mod+shift+Tab workspace prev
 
@@ -171,3 +238,14 @@ bindsym $mod+a floating toggle
 bindsym $mod+e layout tabbed
 bindsym $mod+z layout default
 bindsym $mod+r layout stacking
+
+
+## Configuration des touches multimedia
+# Audio Controls
+bindsym  XF86_AudioLowerVolume exec amixer -q set Master 5%- unmute
+bindsym  XF86_AudioMute  exec amixer -q set Master playback toggle
+bindsym  XF86_AudioRaiseVolume exec amixer -q set Master 5%+ unmute
+bindsym  XF86_AudioStop exec mpc stop
+bindsym  XF86_AudioPrev exec mpc prev
+bindsym  XF86_AudioNext exec mpc next
+bindsym  XF86_AudioPlay exec mpc toggle

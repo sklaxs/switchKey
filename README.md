@@ -14,3 +14,6 @@ my script can run without xcape (I use it for use space as mod), you need to com
     ln -s ${HOME}/shell/switchKey/i3/config_AZERTY ${HOME}/.i3/config_AZERTY
     ln -s ${HOME}/shell/switchKey/i3/config_BEPO ${HOME}/.i3/config_BEPO
     echo "${HOME}/shell/switchKey/switchKey.sh" >> ${HOME}/.profile
+
+## i3 default configuration
+if you want to use i3 shotcuts like i3 default configuration, you can use the configurations files present in switchKey/i3/default (adapt the ln command for this)

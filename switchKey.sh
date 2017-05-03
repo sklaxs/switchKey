@@ -78,11 +78,16 @@ SetAlternateKey()
 ## MAIN PROGRAM
 # we identify actual i3 configuration
  case ${ACTUALKEY} in
-   bep) # notre clavier actuel est en bépo
-   SwitchAzerty
+   bep) #  our actual keyboard configuration is in bépo
+     if [ ! -f ${TMPFILE} ] #if a start the configuration is already in bépo
+     then
+       SwitchBepo
+     else
+       SwitchAzerty
+     fi
      ;;
 
-   lat|oss) # notre clavier actuel est en azerty
+   lat|oss|*) # our actual keyboard configuration is in azerty or anythingelse
      # on passe le clavier en bepo
    SwitchBepo
      ;;

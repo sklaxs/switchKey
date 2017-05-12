@@ -6,7 +6,7 @@
 
 ## CONST
 TMPFILE="/tmp/switchKey.txt"
-ACTUALI3CONFIG=$(sed -n "2p" $HOME/.i3/config | cut -c17-20)
+#ACTUALI3CONFIG=$(sed -n "2p" $HOME/.i3/config | cut -c17-20)
 ACTUALKEY="$(setxkbmap -print | sed -n 5p | cut -c33-35)"
 
 if [ ! -f ${TMPFILE} ]

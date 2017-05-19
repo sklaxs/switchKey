@@ -6,7 +6,6 @@
 
 ## CONST
 TMPFILE="/tmp/switchKey.txt"
-#ACTUALI3CONFIG=$(sed -n "2p" $HOME/.i3/config | cut -c17-20)
 ACTUALKEY="$(setxkbmap -print | sed -n 5p | cut -c33-35)"
 
 if [ ! -f ${TMPFILE} ]
@@ -22,27 +21,47 @@ SwitchBepo()
   setxkbmap fr bepo # we change keyboard mapping
   cp ${HOME}/.i3/config_BEPO ${HOME}/.i3/config # we alternate i3 config file
   i3 reload # we reload i3
-  ResetXmodMap
+  ResetXmodMap "bepo"
   SetAlternateKey "space" "Hyper_L" "65" ${BEPOSWITCH}
   SetAlternateKey "underscore" "ISO_Level3_Shift" "108" ${BEPOSWITCH}
-}
+  }
 
 SwitchAzerty()
 {
   setxkbmap fr oss # we change keyboard mapping
   cp ${HOME}/.i3/config_AZERTY ${HOME}/.i3/config # we alternate i3 config file
   i3 reload # we reload i3
-  ResetXmodMap
+  ResetXmodMap "azerty"
   SetAlternateKey "space" "Hyper_L" "65" "False"
 }
 
 ResetXmodMap()
 {
-  # we reset xmodmap for mod3 and mod4
-  xmodmap -e "clear mod3"
-  xmodmap -e "clear mod4"
-  xmodmap -e "add mod3 = Hyper_L"
-  xmodmap -e "add mod4 = Super_L Super_R"
+  # we reset xmodmap for mod3, mod4 and control
+  keyboard="$1"
+  case ${keyboard} in
+    bepo)
+      xmodmap -e "clear mod3"
+#      xmodmap -e "clear control"
+      xmodmap -e "clear mod4"
+      xmodmap -e "add mod3 = Hyper_L"
+      xmodmap -e "add mod4 = Super_L Super_R"
+#      xmodmap -e "add mod4 = Control_L Control_R"
+#      xmodmap -e "add control = Super_L Super_R"
+      ;;
+
+    azerty)
+      xmodmap -e "clear mod3"
+      xmodmap -e "clear mod4"
+#      xmodmap -e "clear control"
+      xmodmap -e "add mod3 = Hyper_L"
+      xmodmap -e "add mod4 = Super_L Super_R"
+#      xmodmap -e "add control = Control_L"
+      ;;
+
+    *)
+    exit 2
+  esac
 }
 
 SetAlternateKey()

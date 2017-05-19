@@ -16,8 +16,8 @@ set $alt Mod1
 # Définition de space en tant que modificateur
 set $mod Mod3
 
-# Définition de la touche control
-set $control Control
+# Définition dela touche windows
+set $win Mod4
 
 ## Configuration du "design"
 # Police des titres de fenêtres. ISO 10646 = Unicode
@@ -70,19 +70,18 @@ set $ws4 "4-files"
 set $ws5 "5-monitoring"
 set $ws6 "6-player"
 set $ws7 "7-office"
-set $ws8 "8"
+set $ws8 "8-pinta"
 set $ws9 "9"
 set $ws0 "10"
 
 
 ## Autorun
 # Terminals
-assign [class="Lxterm|teminator|lxteminal"] $ws1
+assign [class="Lxterm|Terminator|Lxterminal"] $ws1
 assign [class="(?i)lxterminal"] $ws1
 assign [class="(?i)lxterm"] $ws1
-assign [class="(?i)terminator"] $ws1
 
-for_window [class="lxterminal|URxvt|XTerm|mate-terminal|terminator"] focus, layout tabbed
+for_window [class="lxterminal|URxvt|XTerm|mate-terminal|Terminator"] focus, layout tabbed
 
 # Browsers
 assign [class="Chromium|Firefox|Navigator|Iceweasel"] $ws2
@@ -126,6 +125,9 @@ assign [class="(?i)okular"] $ws7
 assign [class="(?i)libreoffice"] $ws7
 assign [class="(?i)hexchat"] $ws7
 
+## Pinta
+assign [class="Pinta"] $ws8
+
 ## Applications à démarrer avec i3 (ce sont des exemples persos, vous mettez bien ce que vous voulez ;):
 exec firefox
 exec terminator
@@ -141,6 +143,7 @@ bindsym $mod+F4 exec thunar
 bindsym $mod+F5 exec conky
 bindsym $mod+F6 exec vlc
 bindsym $mod+F7 exec libreoffice
+
 
 ## Se déplacer entre espaces de travail:
 bindsym $mod+quotedbl workspace $ws1
@@ -250,11 +253,46 @@ bindsym  XF86_AudioNext exec mpc next
 bindsym  XF86_AudioPlay exec mpc toggle
 
 
-## Racourcis CTRL
-# nécessite l'application xdotool
-bindsym --release $control+x exec --no-startup-id xdotool key --clearmodifiers ctrl+c
-bindsym --release $control+comma exec --no-startup-id xdotool key --clearmodifiers ctrl+v
-bindsym --release $control+y exec --no-startup-id xdotool key --clearmodifiers ctrl+x
-bindsym --release $control+b exec --no-startup-id xdotool key --clearmodifiers ctrl+a
-bindsym --release $control+eacute exec --no-startup-id xdotool key --clearmodifiers ctrl+z
-bindsym --release $control+dead_circumflex exec --no-startup-id xdotool key --clearmodifiers ctrl+y
+## Racourcis CTRL (nécessite l'application xdotool)
+bindsym $win+b                exec --no-startup-id xdotool key --clearmodifiers ctrl+a
+bindsym $win+eacute           exec --no-startup-id xdotool key --clearmodifiers ctrl+z
+bindsym $win+p                exec --no-startup-id xdotool key --clearmodifiers ctrl+e
+bindsym $win+o                exec --no-startup-id xdotool key --clearmodifiers ctrl+r
+bindsym $win+egrave           exec --no-startup-id xdotool key --clearmodifiers ctrl+t
+bindsym $win+dead_circumflex  exec --no-startup-id xdotool key --clearmodifiers ctrl+y
+bindsym $win+v                exec --no-startup-id xdotool key --clearmodifiers ctrl+u
+bindsym $win+d                exec --no-startup-id xdotool key --clearmodifiers ctrl+i
+bindsym $win+l                exec --no-startup-id xdotool key --clearmodifiers ctrl+o
+bindsym $win+j                exec --no-startup-id xdotool key --clearmodifiers ctrl+p
+bindsym $win+a                exec --no-startup-id xdotool key --clearmodifiers ctrl+q
+bindsym $win+u                exec --no-startup-id xdotool key --clearmodifiers ctrl+s
+bindsym $win+i                exec --no-startup-id xdotool key --clearmodifiers ctrl+d
+bindsym $win+e                exec --no-startup-id xdotool key --clearmodifiers ctrl+f
+bindsym $win+comma            exec --no-startup-id xdotool key --clearmodifiers ctrl+g
+bindsym $win+c                exec --no-startup-id xdotool key --clearmodifiers ctrl+h
+bindsym $win+t                exec --no-startup-id xdotool key --clearmodifiers ctrl+j
+bindsym $win+s                exec --no-startup-id xdotool key --clearmodifiers ctrl+k
+bindsym $win+r                exec --no-startup-id xdotool key --clearmodifiers ctrl+l
+bindsym $win+n                exec --no-startup-id xdotool key --clearmodifiers ctrl+m
+bindsym $win+agrave           exec --no-startup-id xdotool key --clearmodifiers ctrl+w
+bindsym $win+y                exec --no-startup-id xdotool key --clearmodifiers ctrl+x
+bindsym $win+x                exec --no-startup-id xdotool key --clearmodifiers ctrl+c
+bindsym $win+period           exec --no-startup-id xdotool key --clearmodifiers ctrl+v
+bindsym $win+k                exec --no-startup-id xdotool key --clearmodifiers ctrl+b
+bindsym $win+apostrophe       exec --no-startup-id xdotool key --clearmodifiers ctrl+n
+bindsym $win+z                exec --no-startup-id xdotool key --clearmodifiers ctrl+dead_circumflex
+bindsym $win+dollar           exec --no-startup-id xdotool key --clearmodifiers ctrl+w
+bindsym $win+ugrave           exec --no-startup-id xdotool key --clearmodifiers ctrl+m
+bindsym $win+asterisk         exec --no-startup-id xdotool key --clearmodifiers ctrl+ccedilla
+bindsym $win+semicolon        exec --no-startup-id xdotool key --clearmodifiers ctrl+g
+bindsym $win+colon            exec --no-startup-id xdotool key --clearmodifiers ctrl+h
+bindsym $win+exclam           exec --no-startup-id xdotool key --clearmodifiers ctrl+f
+bindsym $win+Tab              exec --no-startup-id xdotool key --clearmodifiers ctrl+Tab
+bindsym $win+Escape           exec --no-startup-id xdotool key --clearmodifiers ctrl+Escape
+bindsym $win+Delete           exec --no-startup-id xdotool key --clearmodifiers ctrl+Delete
+bindsym $win+Left             exec --no-startup-id xdotool key --clearmodifiers ctrl+Left
+bindsym $win+Up               exec --no-startup-id xdotool key --clearmodifiers ctrl+Up
+bindsym $win+Right            exec --no-startup-id xdotool key --clearmodifiers ctrl+Right
+bindsym $win+Down             exec --no-startup-id xdotool key --clearmodifiers ctrl+Down
+bindsym $win+Return           exec --no-startup-id xdotool key --clearmodifiers ctrl+Return
+bindsym $win+BackSpace        exec --no-startup-id xdotool key --clearmodifiers ctrl+BackSpace
